@@ -12,4 +12,6 @@ public class CategoriaResources {
     public String listar(){
         return "REST está funcionando";
     }
+    /*Estudei o vídeo REST testado então o novo a ser estudado é o
+    >Testando a primeira classe de dominio-Categoria*/
 }
