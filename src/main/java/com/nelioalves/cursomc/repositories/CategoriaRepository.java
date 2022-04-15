@@ -5,6 +5,8 @@ import org.springframework.stereotype.Repository;
 
 import com.nelioalves.cursomc.domain.Categoria;
 
+import java.util.List;
+
 @Repository
 public interface CategoriaRepository extends JpaRepository<Categoria, Integer> {
 
