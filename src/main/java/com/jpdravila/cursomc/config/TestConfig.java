@@ -1,6 +1,8 @@
 package com.jpdravila.cursomc.config;
 
 import com.jpdravila.cursomc.services.DBService;
+import com.jpdravila.cursomc.services.EmailService;
+import com.jpdravila.cursomc.services.MockEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +21,11 @@ public class TestConfig {
     public boolean instantiateDataBase() throws ParseException {
         dbService.instantiateTestDatabase();
         return true;
+    }
+
+    @Bean
+    public EmailService emailService(){
+        return new MockEmailService();
     }
 
 }
