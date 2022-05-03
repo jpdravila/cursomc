@@ -56,14 +56,14 @@ public class Pedido implements Serializable {
 		this.enderecoDeEntrega = enderecoDeEntrega;
 	}
 
-	public double getValorTotal(){
+	public double getValorTotal() {
 		double soma = 0.0;
-		for(ItemPedido ip : itens){
+		for (ItemPedido ip : itens) {
 			soma = soma + ip.getSubTotal();
 		}
 		return soma;
 	}
-
+	
 	public Integer getId() {
 		return id;
 	}
@@ -136,12 +136,12 @@ public class Pedido implements Serializable {
 			return false;
 		return true;
 	}
-
+	
 	@Override
 	public String toString() {
 		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-		final StringBuffer builder = new StringBuffer("Pedido{");
+		StringBuilder builder = new StringBuilder();
 		builder.append("Pedido número: ");
 		builder.append(getId());
 		builder.append(", Instante: ");
@@ -150,11 +150,11 @@ public class Pedido implements Serializable {
 		builder.append(getCliente().getNome());
 		builder.append(", Situação do pagamento: ");
 		builder.append(getPagamento().getEstado().getDescricao());
-		builder.append("\n Detalhes: \n");
-		for(ItemPedido ip : getItens()){
-			StringBuffer append = builder.append((ip.toString()));
+		builder.append("\nDetalhes:\n");
+		for (ItemPedido ip : getItens()) {
+			builder.append(ip.toString());
 		}
-		builder.append("Valor Total: ");
+		builder.append("Valor total: ");
 		builder.append(nf.format(getValorTotal()));
 		return builder.toString();
 	}

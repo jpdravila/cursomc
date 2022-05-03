@@ -3,20 +3,22 @@ package com.jpdravila.cursomc.services;
 import java.util.Date;
 import java.util.Optional;
 
-import com.jpdravila.cursomc.domain.*;
-import com.jpdravila.cursomc.domain.enums.EstadoPagamento;
-import com.jpdravila.cursomc.repositories.ClienteRepository;
-import com.jpdravila.cursomc.repositories.PagamentoRepository;
-import com.jpdravila.cursomc.repositories.ItemPedidoRepository;
-import com.jpdravila.cursomc.security.UserSS;
-import com.jpdravila.cursomc.services.exceptions.AuthorizationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import com.jpdravila.cursomc.domain.Cliente;
+import com.jpdravila.cursomc.domain.ItemPedido;
+import com.jpdravila.cursomc.domain.PagamentoComBoleto;
+import com.jpdravila.cursomc.domain.Pedido;
+import com.jpdravila.cursomc.domain.enums.EstadoPagamento;
+import com.jpdravila.cursomc.repositories.ItemPedidoRepository;
+import com.jpdravila.cursomc.repositories.PagamentoRepository;
 import com.jpdravila.cursomc.repositories.PedidoRepository;
+import com.jpdravila.cursomc.security.UserSS;
+import com.jpdravila.cursomc.services.exceptions.AuthorizationException;
 import com.jpdravila.cursomc.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -24,22 +26,22 @@ public class PedidoService {
 	
 	@Autowired
 	private PedidoRepository repo;
-
+	
 	@Autowired
 	private BoletoService boletoService;
-
+	
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
-
-	@Autowired
-	private ProdutoService produtoService;
-
+	
 	@Autowired
 	private ItemPedidoRepository itemPedidoRepository;
-
+	
+	@Autowired
+	private ProdutoService produtoService;
+	
 	@Autowired
 	private ClienteService clienteService;
-
+	
 	@Autowired
 	private EmailService emailService;
 	
@@ -48,7 +50,7 @@ public class PedidoService {
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Pedido.class.getName()));
 	}
-
+	
 	public Pedido insert(Pedido obj) {
 		obj.setId(null);
 		obj.setInstante(new Date());
@@ -68,18 +70,17 @@ public class PedidoService {
 			ip.setPedido(obj);
 		}
 		itemPedidoRepository.saveAll(obj.getItens());
-		emailService.sendOrderConfirmationHtmlEmail(obj);
+		emailService.sendOrderConfirmationEmail(obj);
 		return obj;
 	}
-
+	
 	public Page<Pedido> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
 		UserSS user = UserService.authenticated();
-		if(user == null){
+		if (user == null) {
 			throw new AuthorizationException("Acesso negado");
 		}
-
-		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
-		Cliente cliente = clienteService.find(user.getId());
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		Cliente cliente =  clienteService.find(user.getId());
 		return repo.findByCliente(cliente, pageRequest);
 	}
 }

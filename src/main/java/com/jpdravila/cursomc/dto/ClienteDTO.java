@@ -5,10 +5,10 @@ import java.io.Serializable;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
+import com.jpdravila.cursomc.services.validation.ClienteUpdate;
 import org.hibernate.validator.constraints.Length;
 
 import com.jpdravila.cursomc.domain.Cliente;
-import com.jpdravila.cursomc.services.validation.ClienteUpdate;
 
 @ClienteUpdate
 public class ClienteDTO implements Serializable {

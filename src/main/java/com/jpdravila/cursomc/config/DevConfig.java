@@ -1,5 +1,7 @@
 package com.jpdravila.cursomc.config;
 
+import java.text.ParseException;
+
 import com.jpdravila.cursomc.services.DBService;
 import com.jpdravila.cursomc.services.EmailService;
 import com.jpdravila.cursomc.services.SmtpEmailService;
@@ -9,32 +11,29 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
-import java.text.ParseException;
-
 @Configuration
 @Profile("dev")
 public class DevConfig {
 
-    @Autowired
-    private DBService dbService;
-
-    @Value("${spring.jpa.hibernate.ddl-auto}")
-    private String strategy;
-
-    @Bean
-    public boolean instantiateDataBase() throws ParseException {
-        if (!"create".equals(strategy)) {
-            return false;
-        }
-
-        dbService.instantiateTestDatabase();
-        return true;
-    }
-
-    @Bean
-    public EmailService emailService() {
-        return new SmtpEmailService();
-    }
-
-
+	@Autowired
+	private DBService dbService;
+	
+	@Value("${spring.jpa.hibernate.ddl-auto}")
+	private String strategy;
+	
+	@Bean
+	public boolean instantiateDatabase() throws ParseException {
+		
+		if (!"create".equals(strategy)) {
+			return false;
+		}
+		
+		dbService.instantiateTestDatabase();
+		return true;
+	}
+	
+	@Bean
+	public EmailService emailService() {
+		return new SmtpEmailService();
+	}
 }

@@ -3,8 +3,6 @@ package com.jpdravila.cursomc.services;
 import java.util.List;
 import java.util.Optional;
 
-import com.jpdravila.cursomc.domain.Categoria;
-import com.jpdravila.cursomc.dto.CategoriaDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -12,6 +10,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import com.jpdravila.cursomc.domain.Categoria;
+import com.jpdravila.cursomc.dto.CategoriaDTO;
 import com.jpdravila.cursomc.repositories.CategoriaRepository;
 import com.jpdravila.cursomc.services.exceptions.DataIntegrityException;
 import com.jpdravila.cursomc.services.exceptions.ObjectNotFoundException;

@@ -6,8 +6,6 @@ import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
-import com.jpdravila.cursomc.domain.Categoria;
-import com.jpdravila.cursomc.dto.CategoriaDTO;
 import com.jpdravila.cursomc.services.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,6 +19,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.jpdravila.cursomc.domain.Categoria;
+import com.jpdravila.cursomc.dto.CategoriaDTO;
+
 @RestController
 @RequestMapping(value="/categorias")
 public class CategoriaResource {
@@ -33,7 +34,7 @@ public class CategoriaResource {
 		Categoria obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
 	}
-
+	
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(method=RequestMethod.POST)
 	public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaDTO objDto) {
@@ -43,7 +44,7 @@ public class CategoriaResource {
 			.path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
-
+	
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
 	public ResponseEntity<Void> update(@Valid @RequestBody CategoriaDTO objDto, @PathVariable Integer id) {
@@ -52,7 +53,7 @@ public class CategoriaResource {
 		obj = service.update(obj);
 		return ResponseEntity.noContent().build();
 	}
-
+	
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {

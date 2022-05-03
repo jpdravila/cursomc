@@ -8,12 +8,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-import com.jpdravila.cursomc.domain.Cliente;
-import com.jpdravila.cursomc.dto.ClienteDTO;
-import com.jpdravila.cursomc.repositories.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerMapping;
 
+import com.jpdravila.cursomc.domain.Cliente;
+import com.jpdravila.cursomc.dto.ClienteDTO;
+import com.jpdravila.cursomc.repositories.ClienteRepository;
 import com.jpdravila.cursomc.resources.exception.FieldMessage;
 
 public class ClienteUpdateValidator implements ConstraintValidator<ClienteUpdate, ClienteDTO> {
